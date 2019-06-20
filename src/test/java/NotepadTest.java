@@ -1,52 +1,104 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.*;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class NotepadTest {
+import io.qameta.allure.junit4.DisplayName;
+import org.junit.Assert;
+import org.junit.Test;
 
-    WebDriver driver;
-    WebDriverWait wait;
 
-    @BeforeClass
-    public static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
+public class NotepadTest extends WebDriverManagerUtil{
 
-    @Before
-    public void openBrowser(){
-        driver = new ChromeDriver();
-        wait  = new WebDriverWait(driver,5);
-    }
+
+    String title = "My New Super Note";
+    String noteContent = "Note content\nSome text\nAnother text";
+
+    String loginEmail = "asd@gmail.com";
+    String loginPwd = "123456";
+
+    String folderName = "My New Folder";
+
+    String value = "Dark";
 
 
 
     @Test
-    public void createNote(){
-        driver.get("https://anotepad.com/");
-        driver.findElement(By.id("edit_title")).sendKeys("My First Note");
-        driver.findElement(By.id("btnSaveNote")).click();
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(".alert.alert-warning"), "You have saved your note as"));
-        driver.findElement(By.cssSelector(".delete")).click();
-
-        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-        driver.switchTo().alert();
-        alert.accept();
-
-
-        Assert.assertEquals("No note here.", driver.findElement(By.cssSelector(".saved_notes div")).getText());
-
-}
-
-
-
-    @After
-    public void closeBrowser(){
-        driver.quit();
+    @DisplayName("Test notepad content is correct")
+    public void notepadTest() {
+        notePad
+                .openApplication()
+                .setNoteTitle(title)
+                .resetNoteContent(noteContent)
+                .saveRecentNote();
+        Assert.assertEquals(noteContent, notePad.getNoteContent());
     }
+
+    @Test
+    @DisplayName("Test title content is okay")
+    public void notepadTest2() {
+        notePad
+                .openApplication()
+                .setNoteTitle(title)
+                .resetNoteContent(noteContent)
+                .saveRecentNote();
+        Assert.assertEquals(title, notePad.getTitleContent());
+    }
+
+
+    @Test
+    @DisplayName("Log in with valid credentials")
+    public void loginTest() {
+
+        loginPage
+                .open()
+                .enterLoginEmail(loginEmail)
+                .enterLoginPassword(loginPwd)
+                .loginIntoAccount();
+
+        Assert.assertEquals(loginPage.isSettingsButtonDisplayed(), true);
+
+    }
+
+
+    @Test
+    @DisplayName("Create New NoteFolder")
+    public void createFolder() {
+
+        loginPage
+                .open()
+                .enterLoginEmail(loginEmail)
+                .enterLoginPassword(loginPwd)
+                .loginIntoAccount();
+
+        folder
+                .manageNoteFolder()
+                .enterNoteFolderName(folderName)
+                .saveNoteFolder()
+                .close();
+
+        Assert.assertEquals(folder.getCreatedFolderName(), folderName);
+
+    }
+
+
+    @Test
+    @DisplayName("Changing Color theme by Settings")
+    public void changeColourTheme(){
+        loginPage
+                .open()
+                .enterLoginEmail(loginEmail)
+                .enterLoginPassword(loginPwd)
+                .loginIntoAccount();
+
+        colorTheme
+                .open()
+                .navigateToSettings()
+                .navigateToDropdownColourTheme()
+                .chooseColourTheme()
+                .setNewColourTheme();
+
+
+        Assert.assertEquals(value, colorTheme.getCurrentColorTheme());
+
+
+    }
+
 
 }
