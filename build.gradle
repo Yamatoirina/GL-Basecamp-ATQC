@@ -39,10 +39,18 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
     testCompile("io.github.bonigarcia:webdrivermanager:3.6.1")
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    
+    compile group: 'ru.stqa.selenium', name: 'webdriver-factory', version: '4.3'
 
-    testCompile group: 'io.qameta.allure', name: 'allure-junit4', version: '2.12.1'
-    compile group: 'io.qameta.allure', name: 'allure-gradle', version: '2.5'
+
+
+//    testCompile group: 'io.qameta.allure', name: 'allure-junit4', version: '2.12.1'
+//    compile group: 'io.qameta.allure', name: 'allure-gradle', version: '2.5'
+    
+
+    //    compile group: 'org.seleniumhq.grid', name: 'grid-java', version: '3.141.59'
+
 
 }

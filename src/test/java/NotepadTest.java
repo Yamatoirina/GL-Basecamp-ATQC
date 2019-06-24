@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-public class NotepadTest extends WebDriverManagerUtil{
+public class NotepadTest extends WebBrowserDriverFactory{
 
 
     String title = "My New Super Note";

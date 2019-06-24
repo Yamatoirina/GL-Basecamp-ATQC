@@ -1,4 +1,3 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import objects.ColorTheme;
 import objects.LoginPage;
 import objects.NoteFolder;
@@ -6,12 +5,14 @@ import objects.NotePad;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.stqa.selenium.factory.WebDriverPool;
 
-public class WebDriverManagerUtil {
 
-    public static WebDriver driver;
+public class WebBrowserDriverFactory {
+
+ public static WebDriver driver;
     public  static WebDriverWait wait;
 
     NotePad notePad;
@@ -22,8 +23,9 @@ public class WebDriverManagerUtil {
 
     @Before
     public void setupClass() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+
+        driver = WebDriverPool.DEFAULT.getDriver(new ChromeOptions());
+
         driver.manage().window().maximize();
         wait= new WebDriverWait(driver, 15);
 
@@ -34,9 +36,10 @@ public class WebDriverManagerUtil {
     }
 
 
-
     @After
     public void closeBrowser(){
-        driver.quit();
+        WebDriverPool.DEFAULT.dismissAll();
     }
+
+
 }
