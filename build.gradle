@@ -43,14 +43,17 @@ dependencies {
     testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
     
     compile group: 'ru.stqa.selenium', name: 'webdriver-factory', version: '4.3'
-
-
+    
 
 //    testCompile group: 'io.qameta.allure', name: 'allure-junit4', version: '2.12.1'
 //    compile group: 'io.qameta.allure', name: 'allure-gradle', version: '2.5'
-    
 
-    //    compile group: 'org.seleniumhq.grid', name: 'grid-java', version: '3.141.59'
+    testCompile ('net.lightbody.bmp:browsermob-core:2.1.5')
+            { exclude module: 'selenium' }
+
+    compile 'com.codeborne:selenide:5.1.0'
+    compile 'io.cucumber:cucumber-java:4.2.5'
+    
 
 
 }
