@@ -45,8 +45,8 @@ dependencies {
     compile group: 'ru.stqa.selenium', name: 'webdriver-factory', version: '4.3'
     
 
-    testCompile group: 'io.qameta.allure', name: 'allure-junit4', version: '2.12.1'
-    compile group: 'io.qameta.allure', name: 'allure-gradle', version: '2.5'
+//    testCompile group: 'io.qameta.allure', name: 'allure-junit4', version: '2.12.1'
+//    compile group: 'io.qameta.allure', name: 'allure-gradle', version: '2.5'
 
     testCompile ('net.lightbody.bmp:browsermob-core:2.1.5')
             { exclude module: 'selenium' }
